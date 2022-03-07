@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:pr1/Screens/login_page.dart';
 
 class SearchPage extends StatefulWidget {
+  static const String routename = '/SearchPage';
   const SearchPage({Key? key}) : super(key: key);
 
   @override
@@ -9,17 +11,18 @@ class SearchPage extends StatefulWidget {
 
 class _SearchPageState extends State<SearchPage> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+  final TextEditingController search = TextEditingController();
   @override
   build(context) {
     Container _buildmodalbottomsheet(BuildContext context) {
       return Container(
         child: Column(
-          children: [
+          children: const [
             Padding(
-              padding: const EdgeInsets.all(10.0),
+              padding: EdgeInsets.all(10.0),
               child: Text(
                 'Search Filter',
-                style: TextStyle(color: Colors.blue[800], fontSize: 30),
+                style: TextStyle(color: Colors.blue, fontSize: 30),
               ),
             ),
           ],
@@ -31,7 +34,10 @@ class _SearchPageState extends State<SearchPage> {
       otherAccountsPicturesSize: const Size.square(40),
       otherAccountsPictures: [
         IconButton(
-            onPressed: () {},
+            onPressed: () {
+              Navigator.pushReplacement(
+                  context, MaterialPageRoute(builder: (_) => LoginPage()));
+            },
             icon: const Icon(
               Icons.logout_outlined,
               color: Colors.white,
@@ -76,19 +82,20 @@ class _SearchPageState extends State<SearchPage> {
                 borderRadius: BorderRadius.only(
                     topLeft: Radius.circular(30),
                     topRight: Radius.circular(30)))),
-        backgroundColor: Colors.blue[800],
+        backgroundColor: Colors.blue,
         child: const Icon(Icons.filter_list_outlined),
       ),
       key: _scaffoldKey,
       appBar: AppBar(
-        backgroundColor: Colors.blue[800],
+        backgroundColor: Colors.blue,
         leading: IconButton(
           icon: const Icon(Icons.menu),
           onPressed: () => _scaffoldKey.currentState!.openDrawer(),
         ),
         actions: [IconButton(onPressed: () {}, icon: const Icon(Icons.search))],
-        title: const TextField(
-          decoration: InputDecoration(
+        title: TextField(
+          controller: search,
+          decoration: const InputDecoration(
               hintText: 'Search', fillColor: Colors.white, filled: true),
         ),
       ),
@@ -114,7 +121,7 @@ class List_Name extends StatelessWidget {
         child: Container(
           padding: const EdgeInsets.all(5),
           decoration: BoxDecoration(
-              color: Colors.blue[800], borderRadius: BorderRadius.circular(5)),
+              color: Colors.blue, borderRadius: BorderRadius.circular(5)),
           child: Text(
             '$name',
             style: const TextStyle(color: Colors.white, fontSize: 25),
