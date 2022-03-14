@@ -38,7 +38,7 @@ class DBHelper {
     return db.query(table);
   }
 
-  static Future<void> delete(String table, dynamic data) async {
+  static Future<void> deleteUser(String table, dynamic data) async {
     final db = await DBHelper.database();
     db.rawQuery('Delete from Users where username like \'%$data%\' ');
   }

@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:pr1/Screens/login_page.dart';
+import 'package:pr1/models/user.dart';
 
 class SearchPage extends StatefulWidget {
   static const String routename = '/SearchPage';
-  const SearchPage({Key? key}) : super(key: key);
+  SearchPage({Key? key}) : super(key: key);
 
   @override
   State<SearchPage> createState() => _SearchPageState();
@@ -12,8 +13,10 @@ class SearchPage extends StatefulWidget {
 class _SearchPageState extends State<SearchPage> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   final TextEditingController search = TextEditingController();
+
   @override
   build(context) {
+    final routeargument = ModalRoute.of(context)!.settings.arguments as User;
     Container _buildmodalbottomsheet(BuildContext context) {
       return Container(
         child: Column(
@@ -44,13 +47,13 @@ class _SearchPageState extends State<SearchPage> {
               size: 30,
             ))
       ],
-      accountName: const Text(
-        'Guest',
-        style: TextStyle(fontSize: 25),
+      accountName: Text(
+        routeargument.username.toString(),
+        style: const TextStyle(fontSize: 25),
       ),
-      accountEmail: const Text(
-        'Guest@sma.sy',
-        style: TextStyle(fontSize: 15),
+      accountEmail: Text(
+        '${routeargument.username.toString()}@sma.sy',
+        style: const TextStyle(fontSize: 15),
       ),
       currentAccountPicture: const CircleAvatar(
         backgroundColor: Colors.transparent,

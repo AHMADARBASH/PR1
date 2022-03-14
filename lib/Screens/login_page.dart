@@ -30,8 +30,9 @@ class _LoginPageState extends State<LoginPage> {
               element.password!.toLowerCase() ==
                   passwordctrl.text.toLowerCase())
           .toList();
-      if (adminUser.first.username!.toLowerCase() == 'admin' &&
-          adminUser.first.password == '123') {
+      if (adminUser.any((element) =>
+          element.username!.toLowerCase() == 'admin' &&
+          adminUser.first.password == passwordctrl.text)) {
         return true;
       } else {
         return false;
@@ -46,47 +47,13 @@ class _LoginPageState extends State<LoginPage> {
               element.password!.toLowerCase() ==
                   passwordctrl.text.toLowerCase())
           .toList();
-      if (user.first.username != 'Admin' && user.first.password != '123') {
+      if (user.any((element) =>
+          element.username!.toLowerCase() != 'admin' &&
+          element.password! == passwordctrl.text)) {
         return true;
       } else {
         return false;
       }
-    }
-
-    showAlertDialog(BuildContext context) {
-      // set up the buttons
-      Widget cancelButton = TextButton(
-        child: const Text("No"),
-        onPressed: () {
-          Navigator.of(context).pop();
-        },
-      );
-      Widget continueButton = TextButton(
-        child: const Text("Yes"),
-        onPressed: () {
-          Navigator.of(context).pushNamedAndRemoveUntil(
-            LoginPage.routename,
-            ModalRoute.withName(LoginPage.routename),
-          );
-        },
-      );
-
-      // set up the AlertDialog
-      AlertDialog alert = const AlertDialog(
-        shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.all(Radius.circular(20.0))),
-        content: Text("sorry no such user"),
-      );
-
-      // show the dialog
-      showModalBottomSheet(
-        backgroundColor: Colors.transparent,
-        isScrollControlled: true,
-        context: context,
-        builder: (context) {
-          return alert;
-        },
-      );
     }
 
     return SafeArea(
@@ -228,7 +195,6 @@ class _LoginPageState extends State<LoginPage> {
                                       fontWeight: FontWeight.bold),
                                 ),
                                 onPressed: () {
-                                  print(users.length);
                                   if (checkUserCredentials()) {
                                     Navigator.of(context).pushReplacementNamed(
                                         SearchPage.routename,
@@ -242,6 +208,8 @@ class _LoginPageState extends State<LoginPage> {
                                             username: usernamectrl.text,
                                             password: passwordctrl.text));
                                   } else {
+                                    ScaffoldMessenger.of(context)
+                                        .hideCurrentSnackBar();
                                     ScaffoldMessenger.of(context).showSnackBar(
                                         SnackBar(
                                             content: const Text(
@@ -291,8 +259,8 @@ class _LoginPageState extends State<LoginPage> {
                                       Navigator.of(context).pushNamed(
                                           SearchPage.routename,
                                           arguments: User(
-                                              username: 'Guests',
-                                              password: '123'));
+                                              username: 'Guest',
+                                              password: 'xxx'));
                                     },
                                     child: const Text(
                                       'Guest',

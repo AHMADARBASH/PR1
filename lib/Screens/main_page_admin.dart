@@ -28,11 +28,11 @@ class MainPage extends StatelessWidget {
       ],
       accountName: Text(
         userdetail.username.toString().toLowerCase(),
-        style: TextStyle(fontSize: 25),
+        style: const TextStyle(fontSize: 25),
       ),
       accountEmail: Text(
         '${userdetail.username!.toLowerCase()}@sma.sy',
-        style: TextStyle(fontSize: 15),
+        style: const TextStyle(fontSize: 15),
       ),
       currentAccountPicture: const CircleAvatar(
         backgroundColor: Colors.transparent,

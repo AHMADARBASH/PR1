@@ -16,8 +16,15 @@ class _SignUpPageState extends State<SignUpPage> {
   Future<bool> singUp() async {
     if (password.text != confirmPassword.text) {
       ScaffoldMessenger.of(context).hideCurrentSnackBar();
-      ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('password doesn\'t match')));
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Text('passwords doesn\'t match'),
+        action: SnackBarAction(
+          label: 'Dismiss',
+          onPressed: () {
+            ScaffoldMessenger.of(context).hideCurrentSnackBar();
+          },
+        ),
+      ));
       return false;
     } else {
       final db = await DBHelper.database();
