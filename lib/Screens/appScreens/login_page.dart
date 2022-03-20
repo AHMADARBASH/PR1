@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:pr1/Screens/main_page_admin.dart';
-import 'package:pr1/Screens/search_page.dart';
-import 'package:pr1/Screens/signup_page.dart';
+import 'package:pr1/Screens/appScreens/main_page_admin.dart';
+import 'package:pr1/Screens/appScreens/search_page.dart';
+import 'package:pr1/Screens/appScreens/signup_page.dart';
 import 'package:pr1/models/user.dart';
 import 'package:provider/provider.dart';
-import '../providers/users_provider.dart';
+import '../../providers/users_provider.dart';
 
 class LoginPage extends StatefulWidget {
   static const String routename = '/LoginPage';
@@ -16,6 +16,7 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   TextEditingController usernamectrl = TextEditingController();
   TextEditingController passwordctrl = TextEditingController();
+  final formKey = GlobalKey<FormState>();
 
   @override
   Widget build(context) {
@@ -104,10 +105,11 @@ class _LoginPageState extends State<LoginPage> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Form(
+                        key: formKey,
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
-                            TextField(
+                            TextFormField(
                               textInputAction: TextInputAction.next,
                               controller: usernamectrl,
                               decoration: InputDecoration(
@@ -128,15 +130,12 @@ class _LoginPageState extends State<LoginPage> {
                                   borderSide: BorderSide(color: Colors.blue),
                                 ),
                               ),
-                              onSubmitted: (value) {
-                                passwordctrl.text = value.toString();
-                              },
                             ),
                             SizedBox(
                                 height:
                                     (MediaQuery.of(context).size.height / 100) *
                                         3),
-                            TextField(
+                            TextFormField(
                               controller: passwordctrl,
                               obscureText: true,
                               obscuringCharacter: '*',
@@ -158,9 +157,6 @@ class _LoginPageState extends State<LoginPage> {
                                   borderSide: BorderSide(color: Colors.blue),
                                 ),
                               ),
-                              onSubmitted: (value) {
-                                passwordctrl.text = value.toString();
-                              },
                             ),
                             Row(
                               children: [

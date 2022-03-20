@@ -1,12 +1,48 @@
+import 'package:flutter/foundation.dart';
+import 'package:pr1/models/database_helper.dart';
+
 import '../models/school.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import '../models/database_helper.dart';
 
 class SchoolProvider with ChangeNotifier {
   List<School> _items = [];
 
   List<School> get items {
     return [..._items];
+  }
+
+  Future<void> fetchSchools() async {
+    final schoolslist = await DBHelper.getData('Schools');
+    _items = schoolslist
+        .map((e) => School(
+            name: e['Name'],
+            city: e['City'],
+            location: e['Location'],
+            rate: e['Rate'],
+            category: e['Category'],
+            studylevel: e['Study_Level']))
+        .toList();
+    notifyListeners();
+  }
+
+  Future<void> addNewSchool(School school) async {
+    final db = await DBHelper.database();
+    final newSchool = School(
+        name: school.name,
+        city: school.city,
+        location: school.location,
+        category: school.category,
+        rate: school.rate,
+        studylevel: school.studylevel);
+    db.rawQuery(
+        'insert into Schools (Name,City,Location,Rate,Category,Study_Level) values (\'${newSchool.name}\',\'${newSchool.city}\',\'${newSchool.location}\',${school.rate},\'${newSchool.category}\',\'${newSchool.studylevel}\');');
+    notifyListeners();
+  }
+
+  Future<void> deleteSchool(School school) async {
+    _items.removeWhere((element) => element.name == school.name);
+    items;
+    final db = DBHelper.deleteSchool('Schools', school.name);
+    notifyListeners();
   }
 }

@@ -1,0 +1,50 @@
+Date : 2022-03-20 02:41:29
+Directory : d:\Flutter-Projects\pr1\lib
+Total : 19 files,  2256 codes, 57 comments, 100 blanks, all 2413 lines
+
+Languages
++----------+------------+------------+------------+------------+------------+
+| language | files      | code       | comment    | blank      | total      |
++----------+------------+------------+------------+------------+------------+
+| Dart     |         19 |      2,256 |         57 |        100 |      2,413 |
++----------+------------+------------+------------+------------+------------+
+
+Directories
++-------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| path                                                                    | files      | code       | comment    | blank      | total      |
++-------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| .                                                                       |         19 |      2,256 |         57 |        100 |      2,413 |
+| Screens                                                                 |          9 |      1,854 |         57 |         59 |      1,970 |
+| Screens\appScreens                                                      |          5 |        875 |         12 |         35 |        922 |
+| Screens\schoolScreens                                                   |          2 |        589 |         32 |         10 |        631 |
+| Screens\userScreens                                                     |          2 |        390 |         13 |         14 |        417 |
+| models                                                                  |          3 |        103 |          0 |         14 |        117 |
+| providers                                                               |          2 |         70 |          0 |         14 |         84 |
+| widgets                                                                 |          2 |        139 |          0 |          6 |        145 |
++-------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+
+Files
++-------------------------------------------------------------------------+----------+------------+------------+------------+------------+
+| filename                                                                | language | code       | comment    | blank      | total      |
++-------------------------------------------------------------------------+----------+------------+------------+------------+------------+
+| d:\Flutter-Projects\pr1\lib\Screens\appScreens\login_page.dart          | Dart     |        277 |          0 |          7 |        284 |
+| d:\Flutter-Projects\pr1\lib\Screens\appScreens\main_page_admin.dart     | Dart     |        198 |          9 |          6 |        213 |
+| d:\Flutter-Projects\pr1\lib\Screens\appScreens\search_page.dart         | Dart     |        129 |          0 |          8 |        137 |
+| d:\Flutter-Projects\pr1\lib\Screens\appScreens\signup_page.dart         | Dart     |        236 |          3 |          8 |        247 |
+| d:\Flutter-Projects\pr1\lib\Screens\appScreens\spalsh_screen.dart       | Dart     |         35 |          0 |          6 |         41 |
+| d:\Flutter-Projects\pr1\lib\Screens\schoolScreens\add_school_page.dart  | Dart     |        478 |          0 |          5 |        483 |
+| d:\Flutter-Projects\pr1\lib\Screens\schoolScreens\schools_page.dart     | Dart     |        111 |         32 |          5 |        148 |
+| d:\Flutter-Projects\pr1\lib\Screens\userScreens\add_user_page.dart      | Dart     |        245 |          3 |          8 |        256 |
+| d:\Flutter-Projects\pr1\lib\Screens\userScreens\users_page_accouts.dart | Dart     |        145 |         10 |          6 |        161 |
+| d:\Flutter-Projects\pr1\lib\data.dart                                   | Dart     |          8 |          0 |          1 |          9 |
+| d:\Flutter-Projects\pr1\lib\dropdown_list.dart                          | Dart     |         25 |          0 |          3 |         28 |
+| d:\Flutter-Projects\pr1\lib\main.dart                                   | Dart     |         57 |          0 |          3 |         60 |
+| d:\Flutter-Projects\pr1\lib\models\database_helper.dart                 | Dart     |         49 |          0 |          8 |         57 |
+| d:\Flutter-Projects\pr1\lib\models\school.dart                          | Dart     |         39 |          0 |          3 |         42 |
+| d:\Flutter-Projects\pr1\lib\models\user.dart                            | Dart     |         15 |          0 |          3 |         18 |
+| d:\Flutter-Projects\pr1\lib\providers\schools_provider.dart             | Dart     |         42 |          0 |          7 |         49 |
+| d:\Flutter-Projects\pr1\lib\providers\users_provider.dart               | Dart     |         28 |          0 |          7 |         35 |
+| d:\Flutter-Projects\pr1\lib\widgets\school_detail_item.dart             | Dart     |        100 |          0 |          3 |        103 |
+| d:\Flutter-Projects\pr1\lib\widgets\user_detail_item.dart               | Dart     |         39 |          0 |          3 |         42 |
+| Total                                                                   |          |      2,256 |         57 |        100 |      2,413 |
++-------------------------------------------------------------------------+----------+------------+------------+------------+------------+

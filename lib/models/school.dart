@@ -1,11 +1,11 @@
 class School {
   int? id;
   String? name;
-  int? city;
+  String? city;
   String? location;
-  int? rate;
-  int? category;
-  int? studylevel;
+  String? rate;
+  String? category;
+  String? studylevel;
   String? geoLocation;
 
   School(
@@ -28,7 +28,7 @@ class School {
     geoLocation = map['GeoLocation'];
   }
   Map<String, dynamic> toMap() {
-    var map = Map<String, dynamic>();
+    var map = <String, dynamic>{};
     map['Name'] = name;
     map['City'] = city;
     map['Location'] = location;

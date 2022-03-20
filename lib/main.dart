@@ -1,14 +1,19 @@
 import 'package:animated_splash_screen/animated_splash_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:pr1/Screens/login_page.dart';
-import 'package:pr1/Screens/main_page_admin.dart';
-import 'package:pr1/Screens/search_page.dart';
-import 'package:pr1/Screens/signup_page.dart';
-import 'package:pr1/Screens/spalsh_screen.dart';
-import 'package:pr1/Screens/users_page.dart';
+import 'package:pr1/Screens/appScreens/about_the_app_page.dart';
+import 'package:pr1/Screens/appScreens/admin_instruction_page.dart';
+import 'package:pr1/Screens/schoolScreens/add_school_page.dart';
+import 'package:pr1/Screens/userScreens/add_user_page.dart';
+import 'package:pr1/Screens/appScreens/login_page.dart';
+import 'package:pr1/Screens/appScreens/main_page_admin.dart';
+import 'package:pr1/Screens/appScreens/search_page.dart';
+import 'package:pr1/Screens/appScreens/signup_page.dart';
+import 'package:pr1/Screens/appScreens/spalsh_screen.dart';
+import 'package:pr1/Screens/userScreens/users_page_accouts.dart';
 import 'package:pr1/providers/users_provider.dart';
 import 'package:provider/provider.dart';
 import './providers/schools_provider.dart';
+import 'Screens/schoolScreens/schools_page.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -22,7 +27,12 @@ class MyApp extends StatelessWidget {
     MainPage.routename: (ctx) => MainPage(),
     SearchPage.routename: (ctx) => SearchPage(),
     SignUpPage.routename: (ctx) => SignUpPage(),
-    UsersScreen.routename: (ctx) => UsersScreen(),
+    UsersScreen.routename: (ctx) => const UsersScreen(),
+    AddUserPage.routename: (ctx) => AddUserPage(),
+    SchoolsScreen.routename: (ctx) => const SchoolsScreen(),
+    AddSchoolScreen.routename: (ctx) => AddSchoolScreen(),
+    AdminInstructionPage.routename: (ctx) => const AdminInstructionPage(),
+    AboutTheApp.routename: (ctx) => const AboutTheApp(),
   };
   @override
   build(context) {
@@ -40,7 +50,7 @@ class MyApp extends StatelessWidget {
         home: SafeArea(
           child: AnimatedSplashScreen(
             splash: const SplashScreen(),
-            nextScreen: LoginPage(),
+            nextScreen: const LoginPage(),
             animationDuration: const Duration(milliseconds: 500),
             splashTransition: SplashTransition.fadeTransition,
             splashIconSize: double.infinity,

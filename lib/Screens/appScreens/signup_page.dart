@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:pr1/Screens/login_page.dart';
-import '../models/database_helper.dart';
+import 'package:pr1/Screens/appScreens/login_page.dart';
+import '../../models/database_helper.dart';
 
 class SignUpPage extends StatefulWidget {
   static const String routename = '/SignUpPage';

@@ -16,4 +16,19 @@ class UserProvider with ChangeNotifier {
         .toList();
     notifyListeners();
   }
+
+  Future<void> addUser(User user) async {
+    _items.add(user);
+  }
+
+  Future<void> deleteUser(User user) async {
+    _items.removeWhere((element) => element.username == user.username);
+    items;
+    final db = DBHelper.deleteUser('Users', user.username);
+    notifyListeners();
+  }
+
+  void refreshData() {
+    notifyListeners();
+  }
 }

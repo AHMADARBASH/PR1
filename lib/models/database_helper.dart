@@ -42,4 +42,15 @@ class DBHelper {
     final db = await DBHelper.database();
     db.rawQuery('Delete from Users where username like \'%$data%\' ');
   }
+
+  static Future<void> deleteSchool(String table, dynamic data) async {
+    final db = await DBHelper.database();
+    db.rawQuery('Delete from Schools where Name like \'%$data%\' ');
+  }
+
+  Future<void> getTables() async {
+    final db = await DBHelper.database();
+    final tabels =
+        db.rawQuery('select * from schools').then((value) => print(value));
+  }
 }
