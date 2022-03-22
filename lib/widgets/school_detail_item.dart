@@ -1,23 +1,27 @@
 import 'package:flutter/material.dart';
 
 class SchoolDetailItem extends StatelessWidget {
-  final schoolName;
-  final schoolLocation;
-  final schoolStudyLevel;
-  final schoolRate;
+  final String? schoolName;
+  final String? schoolLocation;
+  final String? schoolStudyLevel;
+  final String? schoolRate;
+  final String? schoolCity;
+  final String? schoolCategory;
   const SchoolDetailItem(
       {Key? key,
       required this.schoolName,
       required this.schoolLocation,
       required this.schoolStudyLevel,
-      required this.schoolRate})
+      required this.schoolRate,
+      required this.schoolCity,
+      required this.schoolCategory})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
       width: double.infinity,
-      height: MediaQuery.of(context).size.height * 0.2,
+      height: MediaQuery.of(context).size.height * 0.25,
       child: Row(
         children: [
           Expanded(
@@ -29,8 +33,25 @@ class SchoolDetailItem extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
                     Text(
-                      schoolName,
+                      schoolName!,
                       style: const TextStyle(fontSize: 30),
+                    ),
+                    FittedBox(
+                      child: Row(
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 5),
+                            child: Icon(
+                              Icons.location_city,
+                              color: Theme.of(context).colorScheme.primary,
+                            ),
+                          ),
+                          Text(
+                            schoolCity!,
+                            style: const TextStyle(fontSize: 18),
+                          ),
+                        ],
+                      ),
                     ),
                     FittedBox(
                       child: Row(
@@ -43,7 +64,7 @@ class SchoolDetailItem extends StatelessWidget {
                             ),
                           ),
                           Text(
-                            schoolLocation,
+                            schoolLocation!,
                             style: const TextStyle(fontSize: 18),
                           ),
                         ],
@@ -56,11 +77,25 @@ class SchoolDetailItem extends StatelessWidget {
                             horizontal: 5,
                           ),
                           child: Icon(
+                            Icons.align_vertical_bottom_sharp,
+                            color: Theme.of(context).colorScheme.primary,
+                          ),
+                        ),
+                        Text(schoolStudyLevel!),
+                      ],
+                    ),
+                    Row(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 5,
+                          ),
+                          child: Icon(
                             Icons.account_balance_sharp,
                             color: Theme.of(context).colorScheme.primary,
                           ),
                         ),
-                        Text(schoolStudyLevel),
+                        Text(schoolCategory!),
                       ],
                     )
                   ],
@@ -81,17 +116,22 @@ class SchoolDetailItem extends StatelessWidget {
                       width: MediaQuery.of(context).size.width * 0.15,
                       height: MediaQuery.of(context).size.width * 0.15,
                       child: Text(
-                        schoolRate + '/5',
+                        schoolRate! + '/5',
                         style:
                             const TextStyle(color: Colors.white, fontSize: 25),
                       ),
                     ),
                   ),
-                  Text(
-                    'School Rate',
-                    style: TextStyle(
-                        color: Theme.of(context).colorScheme.primary,
-                        fontSize: 24),
+                  Padding(
+                    padding: const EdgeInsets.all(2.0),
+                    child: FittedBox(
+                      child: Text(
+                        'School Rate',
+                        style: TextStyle(
+                            color: Theme.of(context).colorScheme.primary,
+                            fontSize: 24),
+                      ),
+                    ),
                   )
                 ],
               ))

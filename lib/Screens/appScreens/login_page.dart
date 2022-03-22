@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pr1/Screens/appScreens/main_page_admin.dart';
-import 'package:pr1/Screens/appScreens/search_page.dart';
+import 'package:pr1/Screens/appScreens/main_page_user.dart';
 import 'package:pr1/Screens/appScreens/signup_page.dart';
 import 'package:pr1/models/user.dart';
 import 'package:provider/provider.dart';
@@ -84,7 +84,7 @@ class _LoginPageState extends State<LoginPage> {
                           height:
                               (MediaQuery.of(context).size.height / 100) * 0.5),
                       const Text(
-                        'Login',
+                        'S M A',
                         style: TextStyle(color: Colors.white, fontSize: 30),
                       )
                     ],
@@ -176,49 +176,53 @@ class _LoginPageState extends State<LoginPage> {
                                 height:
                                     (MediaQuery.of(context).size.height / 100) *
                                         5),
-                            Container(
-                              width: MediaQuery.of(context).size.width,
-                              decoration: const BoxDecoration(
-                                  color: Colors.blue,
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(15))),
-                              child: TextButton(
-                                child: const Text(
-                                  'Login',
-                                  style: TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 25,
-                                      fontWeight: FontWeight.bold),
+                            InkWell(
+                              onTap: () {
+                                if (checkUserCredentials()) {
+                                  Navigator.of(context).pushReplacementNamed(
+                                      MainPageUser.routename,
+                                      arguments: User(
+                                          username: usernamectrl.text,
+                                          password: passwordctrl.text));
+                                } else if (chcekAdminCredentials()) {
+                                  Navigator.of(context).pushReplacementNamed(
+                                      MainPage.routename,
+                                      arguments: User(
+                                          username: usernamectrl.text,
+                                          password: passwordctrl.text));
+                                } else {
+                                  ScaffoldMessenger.of(context)
+                                      .hideCurrentSnackBar();
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                      SnackBar(
+                                          content: const Text(
+                                              'Please Check your Credentials or login as a guest'),
+                                          action: SnackBarAction(
+                                            label: 'Dismiss',
+                                            onPressed: () {
+                                              ScaffoldMessenger.of(context)
+                                                  .hideCurrentSnackBar();
+                                            },
+                                          )));
+                                }
+                              },
+                              child: Container(
+                                alignment: Alignment.center,
+                                width: MediaQuery.of(context).size.width * 0.8,
+                                decoration: const BoxDecoration(
+                                    color: Colors.blue,
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(10))),
+                                child: const Padding(
+                                  padding: EdgeInsets.symmetric(vertical: 10),
+                                  child: Text(
+                                    'Login',
+                                    style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 25,
+                                        fontWeight: FontWeight.bold),
+                                  ),
                                 ),
-                                onPressed: () {
-                                  if (checkUserCredentials()) {
-                                    Navigator.of(context).pushReplacementNamed(
-                                        SearchPage.routename,
-                                        arguments: User(
-                                            username: usernamectrl.text,
-                                            password: passwordctrl.text));
-                                  } else if (chcekAdminCredentials()) {
-                                    Navigator.of(context).pushReplacementNamed(
-                                        MainPage.routename,
-                                        arguments: User(
-                                            username: usernamectrl.text,
-                                            password: passwordctrl.text));
-                                  } else {
-                                    ScaffoldMessenger.of(context)
-                                        .hideCurrentSnackBar();
-                                    ScaffoldMessenger.of(context).showSnackBar(
-                                        SnackBar(
-                                            content: const Text(
-                                                'Please Check your Credentials or login as a guest'),
-                                            action: SnackBarAction(
-                                              label: 'Dismiss',
-                                              onPressed: () {
-                                                ScaffoldMessenger.of(context)
-                                                    .hideCurrentSnackBar();
-                                              },
-                                            )));
-                                  }
-                                },
                               ),
                             ),
                             SizedBox(
@@ -253,7 +257,7 @@ class _LoginPageState extends State<LoginPage> {
                                 TextButton(
                                     onPressed: () {
                                       Navigator.of(context).pushNamed(
-                                          SearchPage.routename,
+                                          MainPageUser.routename,
                                           arguments: User(
                                               username: 'Guest',
                                               password: 'xxx'));

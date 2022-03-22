@@ -45,4 +45,21 @@ class SchoolProvider with ChangeNotifier {
     final db = DBHelper.deleteSchool('Schools', school.name);
     notifyListeners();
   }
+
+  static Future<List<School>> searchSchool(String keyword) async {
+    final db = await DBHelper.database();
+    List<Map<String, dynamic>> allRows = await db
+        .query('Schools', where: 'Name Like ?', whereArgs: ['%$keyword%']);
+    List<School> schools = allRows.map((e) => School.fromMap(e)).toList();
+    return schools;
+  }
+
+  static Future<List<School>> getallSchools() async {
+    final db = await DBHelper.database();
+    List<Map<String, dynamic>> allRows = await db.query(
+      'Schools',
+    );
+    List<School> schools = allRows.map((e) => School.fromMap(e)).toList();
+    return schools;
+  }
 }

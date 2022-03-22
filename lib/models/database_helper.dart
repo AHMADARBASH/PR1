@@ -8,20 +8,34 @@ class DBHelper {
     return sql.openDatabase(path.join(dbPath, 'Schools.db'),
         singleInstance: true, onCreate: (db, version) async {
       await db.execute(
-          'CREATE TABLE Users (id INTEGER PRIMARY KEY,Username TEXT,Password TEXT)');
+          'CREATE TABLE Users (id INTEGER PRIMARY KEY ,Username TEXT UNIQUE ,Password TEXT)');
+      await db.execute(
+          'Create TABLE Schools (id INTEGER PRIMARY KEY,Name TEXT,City TEXT, Location TEXT,Rate TEXT,Category TEXT,Study_Level TEXT, GeoLocation TEXT NULL)');
+      await db.execute(
+          'Insert into Users (Username,Password) values(\'admin\' , \'ad123\')');
+      await db.execute(
+          'Insert into Schools (Name,City,Location,Rate,Category,Study_Level) values(\'Jawdat Al-Hashmi\' , \'Damascus\', \'Tajheez - Mohafaza\', \'3\', \'Public School\',\'High School\')');
+      await db.execute(
+          'Insert into Schools (Name,City,Location,Rate,Category,Study_Level) values(\'Satea Al-Hosari\' , \'Damascus\', \'Baghdad Street\', \'4\', \'Public School\',\'High School\')');
+      await db.execute(
+          'Insert into Schools (Name,City,Location,Rate,Category,Study_Level) values(\'Alawael\' , \'Damascus\', \'Moadamiat AL-Sham\', \'5\', \'Private School\',\'High School\')');
     }, version: 1);
   }
 
   static Future<int> insert(String table, Map<String, Object> data) async {
     final db = await DBHelper.database();
     int result = 0;
-    db
-        .insert(
-          table,
-          data,
-          conflictAlgorithm: sql.ConflictAlgorithm.abort,
-        )
-        .then((value) => result = value);
+    try {
+      db
+          .insert(
+            table,
+            data,
+            conflictAlgorithm: sql.ConflictAlgorithm.rollback,
+          )
+          .then((value) => result = value);
+    } catch (e) {
+      print(e);
+    }
     return result;
   }
 

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:pr1/providers/users_provider.dart';
 import 'package:provider/provider.dart';
+import 'package:sqflite/sqflite.dart';
 import '../../models/database_helper.dart';
 
 class AddUserPage extends StatefulWidget {
@@ -14,7 +15,7 @@ class _AddUserPageState extends State<AddUserPage> {
   TextEditingController passwordctrl = TextEditingController();
   TextEditingController confirmPasswordctrl = TextEditingController();
 
-  Future<bool> singUp() async {
+  Future<bool> signUp() async {
     if (passwordctrl.text != confirmPasswordctrl.text) {
       ScaffoldMessenger.of(context).hideCurrentSnackBar();
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
@@ -30,10 +31,15 @@ class _AddUserPageState extends State<AddUserPage> {
     } else {
       final db = await DBHelper.database();
       var result;
-      db.insert('Users', {
-        'Username': usernamectrl.text,
-        'Password': passwordctrl.text
-      }).then((value) => result = value);
+      db
+          .insert(
+              'Users',
+              {
+                'Username': usernamectrl.text.toLowerCase(),
+                'Password': passwordctrl.text
+              },
+              conflictAlgorithm: ConflictAlgorithm.replace)
+          .then((value) => result = value);
       if (result != 0) {
         ScaffoldMessenger.of(context).hideCurrentSnackBar();
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
@@ -102,6 +108,9 @@ class _AddUserPageState extends State<AddUserPage> {
 
   @override
   Widget build(BuildContext context) {
+    final users = Provider.of<UserProvider>(context).items;
+    var contain =
+        users.where((element) => element.username == usernamectrl.text);
     return SafeArea(
       child: Scaffold(
         resizeToAvoidBottomInset: false,
@@ -200,31 +209,53 @@ class _AddUserPageState extends State<AddUserPage> {
             ),
             Padding(
               padding: const EdgeInsets.all(8.0),
-              child: Container(
-                decoration: BoxDecoration(
-                    color: Theme.of(context).colorScheme.primary,
-                    borderRadius: BorderRadius.circular(15)),
-                height: MediaQuery.of(context).size.height * 0.07,
-                width: MediaQuery.of(context).size.width * 0.9,
-                alignment: Alignment.center,
-                child: TextButton(
-                  onPressed: () {
-                    if (usernamectrl.text.toLowerCase() == 'admin') {
-                      ScaffoldMessenger.of(context).hideCurrentSnackBar();
-                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                        content: const Text(
-                            'admin already exits try another name please '),
-                        action: SnackBarAction(
-                          label: 'Dismiss',
-                          onPressed: () {
-                            ScaffoldMessenger.of(context).hideCurrentSnackBar();
-                          },
-                        ),
-                      ));
-                    } else {
-                      singUp();
-                    }
-                  },
+              child: InkWell(
+                onTap: () {
+                  if (usernamectrl.text.toLowerCase() == 'admin') {
+                    ScaffoldMessenger.of(context).hideCurrentSnackBar();
+                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                      content: const Text('admin user can\'t be added'),
+                      action: SnackBarAction(
+                        label: 'Dismiss',
+                        onPressed: () {
+                          ScaffoldMessenger.of(context).hideCurrentSnackBar();
+                        },
+                      ),
+                    ));
+                  } else if (usernamectrl.text.isEmpty) {
+                    ScaffoldMessenger.of(context).hideCurrentSnackBar();
+                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                      content: const Text('Please Enter a User Name '),
+                      action: SnackBarAction(
+                        label: 'Dismiss',
+                        onPressed: () {
+                          ScaffoldMessenger.of(context).hideCurrentSnackBar();
+                        },
+                      ),
+                    ));
+                  } else if (contain.isNotEmpty) {
+                    ScaffoldMessenger.of(context).hideCurrentSnackBar();
+                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                      content: const Text(
+                          'User Already exist try another Credentials '),
+                      action: SnackBarAction(
+                        label: 'Dismiss',
+                        onPressed: () {
+                          ScaffoldMessenger.of(context).hideCurrentSnackBar();
+                        },
+                      ),
+                    ));
+                  } else {
+                    signUp().then((value) => null);
+                  }
+                },
+                child: Container(
+                  decoration: BoxDecoration(
+                      color: Theme.of(context).colorScheme.primary,
+                      borderRadius: BorderRadius.circular(15)),
+                  height: MediaQuery.of(context).size.height * 0.07,
+                  width: MediaQuery.of(context).size.width * 0.9,
+                  alignment: Alignment.center,
                   child: Text(
                     'Add New User',
                     style: TextStyle(
@@ -236,30 +267,6 @@ class _AddUserPageState extends State<AddUserPage> {
             ),
             SizedBox(
               height: MediaQuery.of(context).size.height * 0.02,
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Container(
-                decoration: BoxDecoration(
-                    color: Theme.of(context).colorScheme.onPrimary,
-                    borderRadius: BorderRadius.circular(10)),
-                height: MediaQuery.of(context).size.height * 0.05,
-                width: MediaQuery.of(context).size.width * 0.2,
-                alignment: Alignment.center,
-                child: TextButton(
-                  onPressed: () {
-                    Provider.of<UserProvider>(context, listen: false)
-                        .refreshData();
-                    Navigator.of(context).pop();
-                  },
-                  child: Text(
-                    'Back',
-                    style: TextStyle(
-                        color: Theme.of(context).colorScheme.primary,
-                        fontSize: 15),
-                  ),
-                ),
-              ),
             ),
           ],
         ),

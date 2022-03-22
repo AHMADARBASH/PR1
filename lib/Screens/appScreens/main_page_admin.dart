@@ -19,7 +19,8 @@ class MainPage extends StatelessWidget {
     Widget yesButton = TextButton(
       child: const Text("Yes"),
       onPressed: () {
-        Navigator.of(context).pushReplacementNamed(LoginPage.routename);
+        Navigator.of(context).pushNamedAndRemoveUntil(
+            LoginPage.routename, (Route<dynamic> route) => false);
       },
     );
     // set up the AlertDialog
@@ -161,20 +162,14 @@ class MainPage extends StatelessWidget {
         appBar: AppBar(
           title: const Text('Admin Panel'),
         ),
-        // floatingActionButton: FloatingActionButton(
-        //   onPressed: () {
-        //     final db = DBHelper();
-        //     db.getTables();
-        //   },
-        // ),
         body: Column(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
-            InkWell(
-              onTap: () {
-                Navigator.of(context).pushNamed(UsersScreen.routename);
-              },
-              child: Card(
+            Card(
+              child: InkWell(
+                onTap: () {
+                  Navigator.of(context).pushNamed(UsersScreen.routename);
+                },
                 child: Column(
                   children: [
                     ClipRRect(
@@ -211,11 +206,11 @@ class MainPage extends StatelessWidget {
                 ),
               ),
             ),
-            InkWell(
-              onTap: () {
-                Navigator.of(context).pushNamed(SchoolsScreen.routename);
-              },
-              child: Card(
+            Card(
+              child: InkWell(
+                onTap: () {
+                  Navigator.of(context).pushNamed(SchoolsScreen.routename);
+                },
                 child: Column(
                   children: [
                     ClipRRect(

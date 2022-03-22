@@ -37,7 +37,6 @@ class _AddSchoolScreenState extends State<AddSchoolScreen> {
       studylevel: '');
   void submitForm() {
     if (!formkey.currentState!.validate()) {
-      print('not valid');
       return;
     }
     formkey.currentState!.save();
@@ -66,15 +65,15 @@ class _AddSchoolScreenState extends State<AddSchoolScreen> {
         body: Column(
           children: [
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
               child: Text(
-                'Please enter school informations',
+                'enter school information',
                 style: TextStyle(
                     color: Theme.of(context).colorScheme.primary, fontSize: 26),
               ),
             ),
             Padding(
-              padding: const EdgeInsets.all(8.0),
+              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 5),
               child: Form(
                 key: formkey,
                 child: Column(
@@ -112,7 +111,7 @@ class _AddSchoolScreenState extends State<AddSchoolScreen> {
                       },
                     ),
                     SizedBox(
-                      height: MediaQuery.of(context).size.height * 0.03,
+                      height: MediaQuery.of(context).size.height * 0.02,
                     ),
                     TextFormField(
                       textInputAction: TextInputAction.done,
@@ -453,18 +452,18 @@ class _AddSchoolScreenState extends State<AddSchoolScreen> {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 40),
-              child: Container(
-                decoration: BoxDecoration(
-                    color: Theme.of(context).colorScheme.primary,
-                    borderRadius: BorderRadius.circular(15)),
-                height: MediaQuery.of(context).size.height * 0.07,
-                width: MediaQuery.of(context).size.width * 0.9,
-                alignment: Alignment.center,
-                child: TextButton(
-                  onPressed: () {
-                    submitForm();
-                  },
+              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 25),
+              child: InkWell(
+                onTap: () {
+                  submitForm();
+                },
+                child: Container(
+                  decoration: BoxDecoration(
+                      color: Theme.of(context).colorScheme.primary,
+                      borderRadius: BorderRadius.circular(15)),
+                  height: MediaQuery.of(context).size.height * 0.07,
+                  width: MediaQuery.of(context).size.width * 0.9,
+                  alignment: Alignment.center,
                   child: Text(
                     'Add New School',
                     style: TextStyle(

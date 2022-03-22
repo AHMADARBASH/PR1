@@ -105,40 +105,11 @@ class SchoolsScreen extends StatelessWidget {
                                     schoolLocation: value.items[i].location,
                                     schoolStudyLevel: value.items[i].studylevel,
                                     schoolRate: value.items[i].rate,
+                                    schoolCity: value.items[i].city,
+                                    schoolCategory: value.items[i].category,
                                   ),
                                 ),
-                              )
-
-                          // Card(
-                          //   child: ListTile(
-                          //     leading: Column(
-                          //       children: [
-                          //         CircleAvatar(
-                          //           radius: 20,
-                          //           backgroundColor:
-                          //               Theme.of(context).colorScheme.primary,
-                          //           child: Text(
-                          //             value.items[i].rate!.toString() + '/5',
-                          //             style:
-                          //                 const TextStyle(color: Colors.white),
-                          //           ),
-                          //         ),
-                          //         Text(
-                          //           'Rate',
-                          //           style: TextStyle(color: Colors.blue[800]),
-                          //         )
-                          //       ],
-                          //     ),
-                          //     title: Text(
-                          //       value.items[i].name!,
-                          //       style: TextStyle(fontWeight: FontWeight.bold),
-                          //     ),
-                          //     subtitle: Text(value.items[i].location! +
-                          //         '\n' +
-                          //         value.items[i].studylevel!),
-                          //   ),
-                          // ),
-                          ),
+                              )),
                 ),
         ),
       ),

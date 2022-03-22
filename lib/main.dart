@@ -2,11 +2,12 @@ import 'package:animated_splash_screen/animated_splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:pr1/Screens/appScreens/about_the_app_page.dart';
 import 'package:pr1/Screens/appScreens/admin_instruction_page.dart';
+import 'package:pr1/Screens/appScreens/search_page.dart';
 import 'package:pr1/Screens/schoolScreens/add_school_page.dart';
 import 'package:pr1/Screens/userScreens/add_user_page.dart';
 import 'package:pr1/Screens/appScreens/login_page.dart';
 import 'package:pr1/Screens/appScreens/main_page_admin.dart';
-import 'package:pr1/Screens/appScreens/search_page.dart';
+import 'package:pr1/Screens/appScreens/main_page_user.dart';
 import 'package:pr1/Screens/appScreens/signup_page.dart';
 import 'package:pr1/Screens/appScreens/spalsh_screen.dart';
 import 'package:pr1/Screens/userScreens/users_page_accouts.dart';
@@ -25,7 +26,7 @@ class MyApp extends StatelessWidget {
   final routestable = {
     LoginPage.routename: (ctx) => const LoginPage(),
     MainPage.routename: (ctx) => MainPage(),
-    SearchPage.routename: (ctx) => SearchPage(),
+    MainPageUser.routename: (ctx) => MainPageUser(),
     SignUpPage.routename: (ctx) => SignUpPage(),
     UsersScreen.routename: (ctx) => const UsersScreen(),
     AddUserPage.routename: (ctx) => AddUserPage(),
@@ -33,6 +34,7 @@ class MyApp extends StatelessWidget {
     AddSchoolScreen.routename: (ctx) => AddSchoolScreen(),
     AdminInstructionPage.routename: (ctx) => const AdminInstructionPage(),
     AboutTheApp.routename: (ctx) => const AboutTheApp(),
+    SearchPage.routename: (ctx) => const SearchPage(),
   };
   @override
   build(context) {
