@@ -33,7 +33,7 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
 
     Future<void> resetPassword() async {
       final db = await DBHelper.database();
-      if (username.text.toLowerCase() == 'admin') {
+      if (!formkey.currentState!.validate()) {
         ScaffoldMessenger.of(context).hideCurrentSnackBar();
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
@@ -46,63 +46,79 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
             ),
           ),
         );
-      }
-      if (username.text.isEmpty) {
-        ScaffoldMessenger.of(context).hideCurrentSnackBar();
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: const Text('Please Enter a username'),
-            action: SnackBarAction(
-              label: 'Dismiss',
-              onPressed: () {
-                ScaffoldMessenger.of(context).hideCurrentSnackBar();
-              },
-            ),
-          ),
-        );
-      } else if (password.text != confirmPassword.text) {
-        ScaffoldMessenger.of(context).hideCurrentSnackBar();
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: const Text('Password doesn\'t match'),
-            action: SnackBarAction(
-              label: 'Dismiss',
-              onPressed: () {
-                ScaffoldMessenger.of(context).hideCurrentSnackBar();
-              },
-            ),
-          ),
-        );
-      } else if (contain.isEmpty) {
-        ScaffoldMessenger.of(context).hideCurrentSnackBar();
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: const Text(
-                'User not exist please check your credentials or sign up'),
-            action: SnackBarAction(
-              label: 'Dismiss',
-              onPressed: () {
-                ScaffoldMessenger.of(context).hideCurrentSnackBar();
-              },
-            ),
-          ),
-        );
+        return;
       } else {
-        db.rawUpdate('update Users set Password = ? where Username like ?',
-            // ignore: unnecessary_string_interpolations
-            ['${password.text}', '%${username.text}%']);
-        ScaffoldMessenger.of(context).hideCurrentSnackBar();
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: const Text('Password reseted'),
-            action: SnackBarAction(
-              label: 'Dismiss',
-              onPressed: () {
-                ScaffoldMessenger.of(context).hideCurrentSnackBar();
-              },
+        if (username.value.toString().toLowerCase() == 'admin') {
+          ScaffoldMessenger.of(context).hideCurrentSnackBar();
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: const Text('Admin can\'t be reseted'),
+              action: SnackBarAction(
+                label: 'Dismiss',
+                onPressed: () {
+                  ScaffoldMessenger.of(context).hideCurrentSnackBar();
+                },
+              ),
             ),
-          ),
-        );
+          );
+        }
+        if (username.text.isEmpty) {
+          ScaffoldMessenger.of(context).hideCurrentSnackBar();
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: const Text('Please Enter a username'),
+              action: SnackBarAction(
+                label: 'Dismiss',
+                onPressed: () {
+                  ScaffoldMessenger.of(context).hideCurrentSnackBar();
+                },
+              ),
+            ),
+          );
+        } else if (password.text != confirmPassword.text) {
+          ScaffoldMessenger.of(context).hideCurrentSnackBar();
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: const Text('Password doesn\'t match'),
+              action: SnackBarAction(
+                label: 'Dismiss',
+                onPressed: () {
+                  ScaffoldMessenger.of(context).hideCurrentSnackBar();
+                },
+              ),
+            ),
+          );
+        } else if (contain.isEmpty) {
+          ScaffoldMessenger.of(context).hideCurrentSnackBar();
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: const Text(
+                  'User not exist please check your credentials or sign up'),
+              action: SnackBarAction(
+                label: 'Dismiss',
+                onPressed: () {
+                  ScaffoldMessenger.of(context).hideCurrentSnackBar();
+                },
+              ),
+            ),
+          );
+        } else {
+          db.rawUpdate('update Users set Password = ? where Username like ? ',
+              // ignore: unnecessary_string_interpolations
+              ['${password.text}', '%${username.text}%']);
+          ScaffoldMessenger.of(context).hideCurrentSnackBar();
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: const Text('Password reseted'),
+              action: SnackBarAction(
+                label: 'Dismiss',
+                onPressed: () {
+                  ScaffoldMessenger.of(context).hideCurrentSnackBar();
+                },
+              ),
+            ),
+          );
+        }
       }
     }
 
@@ -128,7 +144,7 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
                 key: formkey,
                 child: Column(
                   children: [
-                    TextField(
+                    TextFormField(
                       textInputAction: TextInputAction.next,
                       controller: username,
                       decoration: InputDecoration(
@@ -144,8 +160,12 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
                           borderSide: BorderSide(color: Colors.blue),
                         ),
                       ),
-                      onSubmitted: (value) {
-                        username.text = value.toString();
+                      validator: (value) {
+                        if (value.toString().toLowerCase() == 'admin') {
+                          return 'admin can\'t be rested';
+                        } else {
+                          return null;
+                        }
                       },
                     ),
                     SizedBox(
