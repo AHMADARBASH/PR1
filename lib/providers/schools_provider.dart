@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:pr1/models/database_helper.dart';
+import 'package:sqflite/sqflite.dart';
 import '../models/school.dart';
 import 'package:flutter/material.dart';
 
@@ -35,8 +36,9 @@ class SchoolProvider with ChangeNotifier {
         category: school.category,
         rate: school.rate,
         studylevel: school.studylevel);
-    db.rawQuery(
-        'insert into Schools (Name,City,Location,Rate,Category,Study_Level) values (\'${newSchool.name}\',\'${newSchool.city}\',\'${newSchool.location}\',${school.rate},\'${newSchool.category}\',\'${newSchool.studylevel}\');');
+    db.insert('Schools', newSchool.toMap(),
+        conflictAlgorithm: ConflictAlgorithm.replace);
+    fetchSchools();
     notifyListeners();
   }
 
