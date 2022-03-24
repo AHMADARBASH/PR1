@@ -56,27 +56,32 @@ class SingleSchoolDetail extends StatelessWidget {
               flex: 2,
               child: Column(
                 children: [
-                  Card(
-                      child: routedSchool.image != null
-                          ? Image(
-                              image: AssetImage('Images/' +
-                                  routedSchool.image.toString() +
-                                  '.png'),
-                            )
-                          : Center(
-                              child: Column(
-                                children: [
-                                  Icon(
-                                    Icons.location_disabled_sharp,
-                                    color:
-                                        Theme.of(context).colorScheme.primary,
-                                    size: 300,
-                                  ),
-                                  const Text(
-                                      'No Image Available for this school'),
-                                ],
-                              ),
-                            )),
+                  SizedBox(
+                    width: MediaQuery.of(context).size.width * 0.9,
+                    height: MediaQuery.of(context).size.height * 0.45,
+                    child: Card(
+                        child: routedSchool.image != null
+                            ? Image(
+                                fit: BoxFit.cover,
+                                image: AssetImage('Images/' +
+                                    routedSchool.image.toString() +
+                                    '.png'),
+                              )
+                            : Center(
+                                child: Column(
+                                  children: [
+                                    Icon(
+                                      Icons.location_disabled_sharp,
+                                      color:
+                                          Theme.of(context).colorScheme.primary,
+                                      size: 300,
+                                    ),
+                                    const Text(
+                                        'No Image Available for this school'),
+                                  ],
+                                ),
+                              )),
+                  ),
                 ],
               )),
           Padding(

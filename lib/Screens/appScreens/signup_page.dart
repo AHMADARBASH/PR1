@@ -47,15 +47,10 @@ class _SignUpPageState extends State<SignUpPage> {
           .then((value) => result = value);
       if (result != 0) {
         ScaffoldMessenger.of(context).hideCurrentSnackBar();
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-          content: const Text('Signed Up Sucessfuly'),
-          action: SnackBarAction(
-            label: 'Dismiss',
-            onPressed: () {
-              ScaffoldMessenger.of(context).hideCurrentSnackBar();
-            },
-          ),
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+          content: Text('Signed Up Sucessfuly'),
         ));
+
         Navigator.of(context).pushNamedAndRemoveUntil(
             LoginPage.routename, ModalRoute.withName('/'));
         return true;
