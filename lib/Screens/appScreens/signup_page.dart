@@ -8,6 +8,8 @@ import 'package:animator/animator.dart';
 
 class SignUpPage extends StatefulWidget {
   static const String routename = '/SignUpPage';
+
+  const SignUpPage({Key? key}) : super(key: key);
   @override
   State<SignUpPage> createState() => _SignUpPageState();
 }
@@ -32,6 +34,7 @@ class _SignUpPageState extends State<SignUpPage> {
       return false;
     } else {
       final db = await DBHelper.database();
+      // ignore: prefer_typing_uninitialized_variables
       var result;
       db
           .insert(
@@ -76,7 +79,8 @@ class _SignUpPageState extends State<SignUpPage> {
     Widget yesButton = TextButton(
       child: const Text("Yes"),
       onPressed: () {
-        Navigator.of(context).pushReplacementNamed(LoginPage.routename);
+        Navigator.of(context).pushNamedAndRemoveUntil(
+            LoginPage.routename, (Route<dynamic> route) => false);
       },
     );
     // set up the AlertDialog

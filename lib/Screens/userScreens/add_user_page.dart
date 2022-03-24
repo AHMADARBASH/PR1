@@ -6,6 +6,8 @@ import '../../models/database_helper.dart';
 
 class AddUserPage extends StatefulWidget {
   static const String routename = '/addUser';
+
+  const AddUserPage({Key? key}) : super(key: key);
   @override
   State<AddUserPage> createState() => _AddUserPageState();
 }
@@ -30,6 +32,7 @@ class _AddUserPageState extends State<AddUserPage> {
       return false;
     } else {
       final db = await DBHelper.database();
+      // ignore: prefer_typing_uninitialized_variables
       var result;
       db
           .insert(

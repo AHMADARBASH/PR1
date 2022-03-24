@@ -21,7 +21,7 @@ class _SplashScreenState extends State<SplashScreen> {
     Navigator.pushReplacement(
         context,
         PageTransition(
-            child: LoginPage(),
+            child: const LoginPage(),
             duration: const Duration(milliseconds: 500),
             type: PageTransitionType.rightToLeftWithFade));
   }

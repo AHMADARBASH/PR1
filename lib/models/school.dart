@@ -7,6 +7,7 @@ class School {
   String? category;
   String? studylevel;
   String? geoLocation;
+  String? image;
 
   School(
       {this.id,
@@ -16,7 +17,8 @@ class School {
       required this.rate,
       required this.category,
       required this.studylevel,
-      this.geoLocation});
+      this.geoLocation,
+      this.image});
 
   School.fromMap(dynamic map) {
     name = map['Name'];
@@ -26,6 +28,7 @@ class School {
     category = map['Category'];
     studylevel = map['Study_Level'];
     geoLocation = map['GeoLocation'];
+    image = map['image'];
   }
   Map<String, dynamic> toMap() {
     var map = <String, dynamic>{};
@@ -36,6 +39,7 @@ class School {
     map['Category'] = category;
     map['Study_Level'] = studylevel;
     map['GeoLocation'] = geoLocation;
+    map['image'] = image;
     return map;
   }
 }

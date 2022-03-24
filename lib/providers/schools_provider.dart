@@ -1,6 +1,5 @@
 import 'package:flutter/foundation.dart';
 import 'package:pr1/models/database_helper.dart';
-
 import '../models/school.dart';
 import 'package:flutter/material.dart';
 
@@ -20,7 +19,9 @@ class SchoolProvider with ChangeNotifier {
             location: e['Location'],
             rate: e['Rate'],
             category: e['Category'],
-            studylevel: e['Study_Level']))
+            studylevel: e['Study_Level'],
+            geoLocation: e['GeoLocation'],
+            image: e['image']))
         .toList();
     notifyListeners();
   }
@@ -42,14 +43,37 @@ class SchoolProvider with ChangeNotifier {
   Future<void> deleteSchool(School school) async {
     _items.removeWhere((element) => element.name == school.name);
     items;
+    // ignore: unused_local_variable
     final db = DBHelper.deleteSchool('Schools', school.name);
     notifyListeners();
   }
 
-  static Future<List<School>> searchSchool(String keyword) async {
+  static Future<List<School>> searchSchool(
+    String keyword,
+  ) async {
     final db = await DBHelper.database();
     List<Map<String, dynamic>> allRows = await db
-        .query('Schools', where: 'Name Like ?', whereArgs: ['%$keyword%']);
+        .query('Schools', where: 'Name Like ? ', whereArgs: ['%$keyword%']);
+    List<School> schools = allRows.map((e) => School.fromMap(e)).toList();
+    return schools;
+  }
+
+  static Future<List<School>> advancedsearchSchool(String location, String city,
+      String rate, String category, String studylevel) async {
+    final db = await DBHelper.database();
+    List<Map<String, dynamic>> allRows = await db.query('Schools',
+        where:
+            'Location Like ? and City like ? and Rate = ? and Category = ? and Study_Level = ?',
+        whereArgs: [
+          '%$location%',
+          '%$city%',
+          // ignore: unnecessary_string_interpolations
+          '$rate',
+          // ignore: unnecessary_string_interpolations
+          '$category',
+          // ignore: unnecessary_string_interpolations
+          '$studylevel'
+        ]);
     List<School> schools = allRows.map((e) => School.fromMap(e)).toList();
     return schools;
   }

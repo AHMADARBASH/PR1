@@ -9,6 +9,7 @@ class User {
   }
 
   Map<String, dynamic> toMap() {
+    // ignore: prefer_collection_literals
     var map = Map<String, dynamic>();
     map['Username'] = username;
     map['Password'] = password;

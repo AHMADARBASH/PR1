@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+// ignore: must_be_immutable
 class SchoolDetailItem extends StatelessWidget {
   final String? schoolName;
   final String? schoolLocation;
@@ -7,14 +8,19 @@ class SchoolDetailItem extends StatelessWidget {
   final String? schoolRate;
   final String? schoolCity;
   final String? schoolCategory;
-  const SchoolDetailItem(
+  String? geolocation;
+  String? schoolImage;
+
+  SchoolDetailItem(
       {Key? key,
       required this.schoolName,
       required this.schoolLocation,
       required this.schoolStudyLevel,
       required this.schoolRate,
       required this.schoolCity,
-      required this.schoolCategory})
+      required this.schoolCategory,
+      this.geolocation,
+      this.schoolImage})
       : super(key: key);
 
   @override
@@ -32,9 +38,11 @@ class SchoolDetailItem extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
-                    Text(
-                      schoolName!,
-                      style: const TextStyle(fontSize: 30),
+                    FittedBox(
+                      child: Text(
+                        schoolName!,
+                        style: const TextStyle(fontSize: 30),
+                      ),
                     ),
                     FittedBox(
                       child: Row(
@@ -91,7 +99,7 @@ class SchoolDetailItem extends StatelessWidget {
                             horizontal: 5,
                           ),
                           child: Icon(
-                            Icons.account_balance_sharp,
+                            Icons.attach_money,
                             color: Theme.of(context).colorScheme.primary,
                           ),
                         ),
@@ -104,6 +112,7 @@ class SchoolDetailItem extends StatelessWidget {
           Expanded(
               flex: 1,
               child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   Padding(
                     padding: const EdgeInsets.symmetric(vertical: 25),
@@ -123,16 +132,15 @@ class SchoolDetailItem extends StatelessWidget {
                     ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.all(2.0),
-                    child: FittedBox(
-                      child: Text(
-                        'School Rate',
-                        style: TextStyle(
-                            color: Theme.of(context).colorScheme.primary,
-                            fontSize: 24),
-                      ),
-                    ),
-                  )
+                      padding: const EdgeInsets.all(2.0),
+                      child: FittedBox(
+                        child: Text(
+                          'School Rate',
+                          style: TextStyle(
+                              color: Theme.of(context).colorScheme.primary,
+                              fontSize: 24),
+                        ),
+                      ))
                 ],
               ))
         ],

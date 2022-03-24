@@ -107,6 +107,7 @@ class SchoolsScreen extends StatelessWidget {
                                     schoolRate: value.items[i].rate,
                                     schoolCity: value.items[i].city,
                                     schoolCategory: value.items[i].category,
+                                    geolocation: value.items[i].geoLocation,
                                   ),
                                 ),
                               )),

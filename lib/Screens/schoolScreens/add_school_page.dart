@@ -5,7 +5,7 @@ import '../../providers/schools_provider.dart';
 
 class AddSchoolScreen extends StatefulWidget {
   static const String routename = '/AddSchoolScreen';
-  AddSchoolScreen({Key? key}) : super(key: key);
+  const AddSchoolScreen({Key? key}) : super(key: key);
   @override
   State<AddSchoolScreen> createState() => _AddSchoolScreenState();
 }
@@ -168,7 +168,7 @@ class _AddSchoolScreenState extends State<AddSchoolScreen> {
                         ),
                         Expanded(
                           flex: 1,
-                          child: Container(
+                          child: SizedBox(
                             width: MediaQuery.of(context).size.width * 0.5,
                             child: DropdownButtonFormField(
                               decoration: InputDecoration(
@@ -244,7 +244,7 @@ class _AddSchoolScreenState extends State<AddSchoolScreen> {
                         ),
                         Expanded(
                           flex: 1,
-                          child: Container(
+                          child: SizedBox(
                             width: MediaQuery.of(context).size.width * 0.5,
                             child: DropdownButtonFormField(
                               decoration: InputDecoration(
@@ -290,7 +290,6 @@ class _AddSchoolScreenState extends State<AddSchoolScreen> {
                                       rate: value.toString(),
                                       studylevel: school.studylevel);
                                   selectedRate = value.toString();
-                                  print(selectedRate);
                                 });
                               },
                             ),
@@ -325,7 +324,7 @@ class _AddSchoolScreenState extends State<AddSchoolScreen> {
                         ),
                         Expanded(
                           flex: 1,
-                          child: Container(
+                          child: SizedBox(
                             width: MediaQuery.of(context).size.width * 0.5,
                             child: DropdownButtonFormField(
                               decoration: InputDecoration(
@@ -394,7 +393,7 @@ class _AddSchoolScreenState extends State<AddSchoolScreen> {
                         ),
                         Expanded(
                           flex: 1,
-                          child: Container(
+                          child: SizedBox(
                             width: MediaQuery.of(context).size.width * 0.5,
                             child: DropdownButtonFormField(
                               decoration: InputDecoration(

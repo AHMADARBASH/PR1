@@ -12,7 +12,7 @@ import 'about_the_app_page.dart';
 
 class MainPage extends StatelessWidget {
   static const String routename = '/MainPage_Admin';
-  MainPage({Key? key}) : super(key: key);
+  const MainPage({Key? key}) : super(key: key);
 
   showAlertDialog(BuildContext context) {
     // set up the buttons
@@ -75,6 +75,7 @@ class MainPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final userdetail = ModalRoute.of(context)!.settings.arguments as User;
+    // ignore: unused_local_variable
     final schoolsData = Provider.of<SchoolProvider>(context);
     var drawer = UserAccountsDrawerHeader(
       otherAccountsPicturesSize: const Size.square(40),
@@ -154,6 +155,11 @@ class MainPage extends StatelessWidget {
 
     return SafeArea(
       child: Scaffold(
+        // floatingActionButton: FloatingActionButton(
+        //   onPressed: () {
+        //     DBHelper.getTables();
+        //   },
+        // ),
         resizeToAvoidBottomInset: false,
         backgroundColor: Colors.blue[50],
         drawer: Drawer(

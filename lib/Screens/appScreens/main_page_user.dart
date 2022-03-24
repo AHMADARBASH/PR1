@@ -1,16 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:pr1/Screens/appScreens/about_the_app_page.dart';
+import 'package:pr1/Screens/appScreens/advanced_search_page.dart';
 import 'package:pr1/Screens/appScreens/login_page.dart';
 import 'package:pr1/Screens/appScreens/search_page.dart';
 import 'package:pr1/models/user.dart';
 import 'package:animator/animator.dart';
 import 'package:pr1/providers/schools_provider.dart';
-import 'package:pr1/widgets/school_detail_item.dart';
+import 'package:pr1/Screens/schoolScreens/single_school_detail.dart';
+import 'package:pr1/widgets/simple_school_detail.dart';
 import 'package:provider/provider.dart';
+import '../schoolScreens/single_school_detail.dart';
 
 class MainPageUser extends StatefulWidget {
   static const String routename = '/MainPageUser';
-  MainPageUser({Key? key}) : super(key: key);
+  const MainPageUser({Key? key}) : super(key: key);
 
   @override
   State<MainPageUser> createState() => _MainPageUserState();
@@ -81,22 +85,6 @@ class _MainPageUserState extends State<MainPageUser> {
   @override
   build(context) {
     final routeargument = ModalRoute.of(context)!.settings.arguments as User;
-    Container _buildmodalbottomsheet(BuildContext context) {
-      return Container(
-        child: Column(
-          children: const [
-            Padding(
-              padding: EdgeInsets.all(10.0),
-              child: Text(
-                'Search Filter',
-                style: TextStyle(color: Colors.blue, fontSize: 30),
-              ),
-            ),
-          ],
-        ),
-      );
-    }
-
     var drawerheader = UserAccountsDrawerHeader(
       otherAccountsPicturesSize: const Size.square(40),
       otherAccountsPictures: [
@@ -160,16 +148,26 @@ class _MainPageUserState extends State<MainPageUser> {
         ? SafeArea(
             child: Scaffold(
             backgroundColor: Colors.blue[50],
-            floatingActionButton: FloatingActionButton(
-              onPressed: () => showModalBottomSheet(
-                  context: context,
-                  builder: (context) => _buildmodalbottomsheet(context),
-                  shape: const RoundedRectangleBorder(
-                      borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(30),
-                          topRight: Radius.circular(30)))),
-              backgroundColor: Colors.blue,
-              child: const Icon(Icons.filter_list_outlined),
+            floatingActionButton: SpeedDial(
+              overlayColor: Colors.transparent,
+              animatedIcon: AnimatedIcons.search_ellipsis,
+              children: [
+                SpeedDialChild(
+                    onTap: () {
+                      Navigator.of(context).pushNamed(SearchPage.routename);
+                    },
+                    foregroundColor: Colors.blue,
+                    child: const Icon(Icons.search),
+                    label: 'basic search'),
+                SpeedDialChild(
+                    onTap: () {
+                      Navigator.of(context)
+                          .pushNamed(AdvancedSearchPage.routename);
+                    },
+                    foregroundColor: Colors.blue,
+                    child: const Icon(Icons.maps_home_work),
+                    label: 'Advanced Search')
+              ],
             ),
             key: _scaffoldKey,
             appBar: AppBar(
@@ -178,14 +176,6 @@ class _MainPageUserState extends State<MainPageUser> {
                 icon: const Icon(Icons.menu),
                 onPressed: () => _scaffoldKey.currentState!.openDrawer(),
               ),
-              actions: [
-                IconButton(
-                  icon: const Icon(Icons.search),
-                  onPressed: () {
-                    Navigator.of(context).pushNamed(SearchPage.routename);
-                  },
-                )
-              ],
             ),
             drawer: Drawer(
               child: draweritems,
@@ -196,31 +186,41 @@ class _MainPageUserState extends State<MainPageUser> {
                   child: FutureBuilder(
                     future: Provider.of<SchoolProvider>(context, listen: false)
                         .fetchSchools(),
-                    builder: (context, snapshot) =>
-                        snapshot.connectionState == ConnectionState.waiting
-                            ? const Center(child: CircularProgressIndicator())
-                            : Consumer<SchoolProvider>(
-                                child: const Center(
-                                  child: Text('There is no Schools to show'),
-                                ),
-                                builder: (ctx, value, ch) => value.items.isEmpty
-                                    ? ch!
-                                    : ListView.builder(
-                                        itemCount: value.items.length,
-                                        itemBuilder: (ctx, i) => Card(
-                                              child: SchoolDetailItem(
-                                                schoolName: value.items[i].name,
-                                                schoolLocation:
-                                                    value.items[i].location,
-                                                schoolStudyLevel:
-                                                    value.items[i].studylevel,
-                                                schoolRate: value.items[i].rate,
-                                                schoolCity: value.items[i].city,
-                                                schoolCategory:
-                                                    value.items[i].category,
-                                              ),
-                                            )),
-                              ),
+                    builder: (context, snapshot) => snapshot.connectionState ==
+                            ConnectionState.waiting
+                        ? const Center(child: CircularProgressIndicator())
+                        : Consumer<SchoolProvider>(
+                            child: const Center(
+                              child: Text('There is no Schools to show'),
+                            ),
+                            builder: (ctx, value, ch) => value.items.isEmpty
+                                ? ch!
+                                : ListView.builder(
+                                    itemCount: value.items.length,
+                                    itemBuilder: (ctx, i) => Card(
+                                          child: InkWell(
+                                            onTap: () {
+                                              Navigator.of(context).pushNamed(
+                                                  SingleSchoolDetail.routeanme,
+                                                  arguments: value.items[i]);
+                                            },
+                                            child: SimpleSchoolDetail(
+                                              schoolImage: value.items[i].image,
+                                              schoolStudyLevel:
+                                                  value.items[i].studylevel,
+                                              schoolRate: value.items[i].rate,
+                                              schoolLocation:
+                                                  value.items[i].location,
+                                              schoolName: value.items[i].name,
+                                              schoolCity: value.items[i].city,
+                                              schoolCategory:
+                                                  value.items[i].category,
+                                              geolocation:
+                                                  value.items[i].geoLocation,
+                                            ),
+                                          ),
+                                        )),
+                          ),
                   ),
                 ),
               ],
@@ -233,11 +233,11 @@ class _MainPageUserState extends State<MainPageUser> {
               title: const Text('Guest User'),
             ),
             floatingActionButton: FloatingActionButton(
-              child: const Icon(Icons.filter_list),
+              child: const Icon(Icons.search),
               onPressed: () {
                 ScaffoldMessenger.of(context).hideCurrentSnackBar();
                 ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                  content: const Text('Please Login to use Search Feautre'),
+                  content: const Text('Please Login to use Search Feature'),
                   action: SnackBarAction(
                       label: 'Dismiss',
                       onPressed: () {
@@ -264,7 +264,7 @@ class _MainPageUserState extends State<MainPageUser> {
                                 : ListView(
                                     children: value.items
                                         .map((e) => Card(
-                                              child: SchoolDetailItem(
+                                              child: SimpleSchoolDetail(
                                                 schoolName: e.name,
                                                 schoolLocation: e.location,
                                                 schoolStudyLevel: e.studylevel,
@@ -273,7 +273,8 @@ class _MainPageUserState extends State<MainPageUser> {
                                                 schoolCategory: e.category,
                                               ),
                                             ))
-                                        .toList(),
+                                        .toList()
+                                        .sublist(0, 3),
                                   )),
                   ),
                 ),

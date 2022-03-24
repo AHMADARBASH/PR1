@@ -24,6 +24,7 @@ class UserProvider with ChangeNotifier {
   Future<void> deleteUser(User user) async {
     _items.removeWhere((element) => element.username == user.username);
     items;
+    // ignore: unused_local_variable
     final db = DBHelper.deleteUser('Users', user.username);
     notifyListeners();
   }
