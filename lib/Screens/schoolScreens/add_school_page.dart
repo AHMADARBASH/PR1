@@ -35,45 +35,27 @@ class _AddSchoolScreenState extends State<AddSchoolScreen> {
       category: '',
       rate: '1',
       studylevel: '');
+  void submitForm() {
+    if (!formkey.currentState!.validate()) {
+      return;
+    }
+    formkey.currentState!.save();
+    Provider.of<SchoolProvider>(context, listen: false).addNewSchool(school);
+    ScaffoldMessenger.of(context).hideCurrentSnackBar();
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+      content: const Text('School Added Scussesfully'),
+      action: SnackBarAction(
+        label: 'Dismiss',
+        onPressed: () {
+          ScaffoldMessenger.of(context).hideCurrentSnackBar();
+        },
+      ),
+    ));
+    Provider.of<SchoolProvider>(context, listen: false).fetchSchools();
+  }
 
   @override
   Widget build(BuildContext context) {
-    final scools = Provider.of<SchoolProvider>(context).items;
-    final contain = scools.where((e) => e.name == schoolNamecontroller.text);
-    void submitForm() {
-      if (contain.isNotEmpty) {
-        ScaffoldMessenger.of(context).hideCurrentSnackBar();
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-          content: const Text('School already exist '),
-          action: SnackBarAction(
-            label: 'Dismiss',
-            onPressed: () {
-              ScaffoldMessenger.of(context).hideCurrentSnackBar();
-            },
-          ),
-        ));
-        return;
-      }
-      if (!formkey.currentState!.validate()) {
-        return;
-      } else {
-        formkey.currentState!.save();
-        Provider.of<SchoolProvider>(context, listen: false)
-            .addNewSchool(school);
-        ScaffoldMessenger.of(context).hideCurrentSnackBar();
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-          content: const Text('School Added Scussesfully'),
-          action: SnackBarAction(
-            label: 'Dismiss',
-            onPressed: () {
-              ScaffoldMessenger.of(context).hideCurrentSnackBar();
-            },
-          ),
-        ));
-        Provider.of<SchoolProvider>(context, listen: false).fetchSchools();
-      }
-    }
-
     return SafeArea(
       child: Scaffold(
         resizeToAvoidBottomInset: false,
@@ -117,9 +99,6 @@ class _AddSchoolScreenState extends State<AddSchoolScreen> {
                         } else {
                           return null;
                         }
-                      },
-                      onChanged: (value) {
-                        schoolNamecontroller.text = value;
                       },
                       onSaved: (value) {
                         school = School(

@@ -5,7 +5,9 @@ import 'package:url_launcher/url_launcher.dart';
 
 class SingleSchoolDetail extends StatelessWidget {
   static const routeanme = '/SingleSchoolDetail';
+
   const SingleSchoolDetail({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     final routedSchool = ModalRoute.of(context)!.settings.arguments as School;

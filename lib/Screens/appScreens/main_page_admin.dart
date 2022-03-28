@@ -62,7 +62,7 @@ class MainPage extends StatelessWidget {
                 ),
               ),
               const Text(
-                'Silde Down to Cancel',
+                'Slide Down to Cancel',
                 style: TextStyle(color: Colors.white, fontSize: 30),
               )
             ],

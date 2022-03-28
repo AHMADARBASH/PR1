@@ -217,7 +217,7 @@ class _LoginPageState extends State<LoginPage> {
                                                 ScaffoldMessenger.of(context)
                                                     .hideCurrentSnackBar();
                                               },
-                                            )));
+                                            ),),);
                                   }
                                 },
                                 child: Container(

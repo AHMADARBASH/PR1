@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:pr1/Screens/appScreens/about_the_app_page.dart';
 import 'package:pr1/Screens/appScreens/advanced_search_page.dart';
 import 'package:pr1/Screens/appScreens/login_page.dart';
@@ -10,10 +9,12 @@ import 'package:pr1/providers/schools_provider.dart';
 import 'package:pr1/Screens/schoolScreens/single_school_detail.dart';
 import 'package:pr1/widgets/simple_school_detail.dart';
 import 'package:provider/provider.dart';
+import 'package:water_drop_nav_bar/water_drop_nav_bar.dart';
 import '../schoolScreens/single_school_detail.dart';
 
 class MainPageUser extends StatefulWidget {
   static const String routename = '/MainPageUser';
+
   const MainPageUser({Key? key}) : super(key: key);
 
   @override
@@ -82,6 +83,7 @@ class _MainPageUserState extends State<MainPageUser> {
     );
   }
 
+  int selectedIndex = 0;
   @override
   build(context) {
     final routeargument = ModalRoute.of(context)!.settings.arguments as User;
@@ -144,90 +146,146 @@ class _MainPageUserState extends State<MainPageUser> {
       ],
     );
 
+    List<Widget> body = [
+      Column(
+        children: [
+          Expanded(
+            child: FutureBuilder(
+              future: Provider.of<SchoolProvider>(context, listen: false)
+                  .fetchSchools(),
+              builder: (context, snapshot) => snapshot.connectionState ==
+                      ConnectionState.waiting
+                  ? const Center(child: CircularProgressIndicator())
+                  : Consumer<SchoolProvider>(
+                      child: const Center(
+                        child: Text('There is no Schools to show'),
+                      ),
+                      builder: (ctx, value, ch) => value.items.isEmpty
+                          ? ch!
+                          : ListView.builder(
+                              itemCount: value.items.length,
+                              itemBuilder: (ctx, i) => InkWell(
+                                    onTap: () {
+                                      Navigator.of(context).pushNamed(
+                                          SingleSchoolDetail.routeanme,
+                                          arguments: value.items[i]);
+                                    },
+                                    child: SimpleSchoolDetail(
+                                      schoolImage: value.items[i].image,
+                                      schoolStudyLevel:
+                                          value.items[i].studylevel,
+                                      schoolRate: value.items[i].rate,
+                                      schoolLocation: value.items[i].location,
+                                      schoolName: value.items[i].name,
+                                      schoolCity: value.items[i].city,
+                                      schoolCategory: value.items[i].category,
+                                      geolocation: value.items[i].geoLocation,
+                                    ),
+                                  )),
+                    ),
+            ),
+          ),
+        ],
+      ),
+      const AboutTheApp(),
+      SizedBox(
+        height: MediaQuery.of(context).size.height,
+        width: MediaQuery.of(context).size.width,
+        child: Column(
+          children: [
+            SizedBox(
+              height: MediaQuery.of(context).size.height * .35,
+              child: const Center(
+                child: Text(
+                  'select your search type',
+                  style: TextStyle(
+                    fontWeight: FontWeight.w500,
+                    fontSize: 20,
+                    color: Colors.blue,
+                  ),
+                ),
+              ),
+            ),
+            FittedBox(
+              child: ElevatedButton(
+                onPressed: () {
+                  Navigator.of(context).pushNamed(SearchPage.routename);
+                },
+                child: const Text(
+                  '    basic search    ',
+                  style: TextStyle(
+                    fontWeight: FontWeight.w900,
+                  ),
+                ),
+              ),
+            ),
+            FittedBox(
+              child: ElevatedButton(
+                onPressed: () {
+                  Navigator.of(context).pushNamed(AdvancedSearchPage.routename);
+                },
+                child: const Text(
+                  'Advanced Search',
+                  style: TextStyle(
+                    fontWeight: FontWeight.w900,
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    ];
     return routeargument.username != 'Guest'
         ? SafeArea(
             child: Scaffold(
             backgroundColor: Colors.blue[50],
-            floatingActionButton: SpeedDial(
-              overlayColor: Colors.transparent,
-              animatedIcon: AnimatedIcons.search_ellipsis,
-              children: [
-                SpeedDialChild(
-                    onTap: () {
-                      Navigator.of(context).pushNamed(SearchPage.routename);
-                    },
-                    foregroundColor: Colors.blue,
-                    child: const Icon(Icons.search),
-                    label: 'basic search'),
-                SpeedDialChild(
-                    onTap: () {
-                      Navigator.of(context)
-                          .pushNamed(AdvancedSearchPage.routename);
-                    },
-                    foregroundColor: Colors.blue,
-                    child: const Icon(Icons.maps_home_work),
-                    label: 'Advanced Search')
-              ],
-            ),
             key: _scaffoldKey,
             appBar: AppBar(
-              backgroundColor: Colors.blue,
               leading: IconButton(
                 icon: const Icon(Icons.menu),
                 onPressed: () => _scaffoldKey.currentState!.openDrawer(),
+              ),
+              backgroundColor: Colors.blue,
+              title: const Center(
+                child: Text('SMA'),
               ),
             ),
             drawer: Drawer(
               child: draweritems,
             ),
-            body: Column(
-              children: [
-                Expanded(
-                  child: FutureBuilder(
-                    future: Provider.of<SchoolProvider>(context, listen: false)
-                        .fetchSchools(),
-                    builder: (context, snapshot) => snapshot.connectionState ==
-                            ConnectionState.waiting
-                        ? const Center(child: CircularProgressIndicator())
-                        : Consumer<SchoolProvider>(
-                            child: const Center(
-                              child: Text('There is no Schools to show'),
-                            ),
-                            builder: (ctx, value, ch) => value.items.isEmpty
-                                ? ch!
-                                : ListView.builder(
-                                    itemCount: value.items.length,
-                                    itemBuilder: (ctx, i) => Card(
-                                          child: InkWell(
-                                            onTap: () {
-                                              Navigator.of(context).pushNamed(
-                                                  SingleSchoolDetail.routeanme,
-                                                  arguments: value.items[i]);
-                                            },
-                                            child: SimpleSchoolDetail(
-                                              schoolImage: value.items[i].image,
-                                              schoolStudyLevel:
-                                                  value.items[i].studylevel,
-                                              schoolRate: value.items[i].rate,
-                                              schoolLocation:
-                                                  value.items[i].location,
-                                              schoolName: value.items[i].name,
-                                              schoolCity: value.items[i].city,
-                                              schoolCategory:
-                                                  value.items[i].category,
-                                              geolocation:
-                                                  value.items[i].geoLocation,
-                                            ),
-                                          ),
-                                        )),
-                          ),
-                  ),
+            body: body[selectedIndex],
+            bottomNavigationBar: WaterDropNavBar(
+              backgroundColor: Colors.white,
+              waterDropColor: Colors.blue,
+              inactiveIconColor: Colors.blue,
+              onItemSelected: (index) {
+                setState(() {
+                  selectedIndex = index;
+                });
+              },
+              selectedIndex: selectedIndex,
+              barItems: [
+                BarItem(
+                  filledIcon: Icons.home,
+                  outlinedIcon: Icons.home_outlined,
+                ),
+                BarItem(
+                  filledIcon: Icons.info,
+                  outlinedIcon: Icons.info_outline_rounded,
+                ),
+                BarItem(
+                  filledIcon: Icons.saved_search,
+                  outlinedIcon: Icons.search,
                 ),
               ],
             ),
           ))
         : SafeArea(
             child: Scaffold(
+            drawer: Drawer(
+              child: draweritems,
+            ),
             backgroundColor: Colors.blue[50],
             appBar: AppBar(
               title: const Text('Guest User'),

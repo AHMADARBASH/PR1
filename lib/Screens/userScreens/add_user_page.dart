@@ -207,8 +207,11 @@ class _AddUserPageState extends State<AddUserPage> {
                 ),
               ),
             ),
+            SizedBox(
+              height: MediaQuery.of(context).size.height * 0.25,
+            ),
             Padding(
-              padding: const EdgeInsets.only(right: 8.0, left: 8, top: 20),
+              padding: const EdgeInsets.all(8.0),
               child: InkWell(
                 onTap: () {
                   if (usernamectrl.text.toLowerCase() == 'admin') {
@@ -252,7 +255,7 @@ class _AddUserPageState extends State<AddUserPage> {
                 child: Container(
                   decoration: BoxDecoration(
                       color: Theme.of(context).colorScheme.primary,
-                      borderRadius: BorderRadius.circular(8)),
+                      borderRadius: BorderRadius.circular(15)),
                   height: MediaQuery.of(context).size.height * 0.07,
                   width: MediaQuery.of(context).size.width * 0.9,
                   alignment: Alignment.center,

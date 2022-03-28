@@ -6,12 +6,9 @@ class AboutTheApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
+    return const SafeArea(
       child: Scaffold(
-        appBar: AppBar(
-          title: const Text('About the App'),
-        ),
-        body: const Padding(
+        body: Padding(
           padding: EdgeInsets.all(8.0),
           child: Text(
             '''School Management App
